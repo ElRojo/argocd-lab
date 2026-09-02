@@ -3,7 +3,7 @@
   "apiVersion": "argoproj.io/v1alpha1",
   "metadata": {
     "name": "argo-workflow-template",
-    "namespace": "argo",
+    "namespace": "argocd",
     "labels": {}
   },
   "spec": {
@@ -22,7 +22,7 @@
     "template": {
       "metadata": {
         "name": "argo-workflow-template-{{clusterName}}",
-        "namespace": "argo"
+        "namespace": "argocd"
       },
       "spec": {
         "source": {
@@ -34,7 +34,7 @@
           }
         },
         "destination": {
-          "namespace": "argo",
+          "namespace": "argocd",
           "name": "{{clusterName}}"
         },
         "project": "argo-workflows",
