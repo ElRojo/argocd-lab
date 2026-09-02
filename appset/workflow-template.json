@@ -1,0 +1,52 @@
+{
+  "kind": "ApplicationSet",
+  "apiVersion": "argoproj.io/v1alpha1",
+  "metadata": {
+    "name": "argo-workflow-template",
+    "namespace": "argo",
+    "labels": {}
+  },
+  "spec": {
+    "generators": [
+      {
+        "list": {
+          "elements": [
+            {
+              "clusterName": "default",
+              "folderPath": "workflowtemplates"
+            }
+          ]
+        }
+      }
+    ],
+    "template": {
+      "metadata": {
+        "name": "argo-workflow-template-{{clusterName}}",
+        "namespace": "argo"
+      },
+      "spec": {
+        "source": {
+          "repoURL": "https://github.com/ElRojo/argocd-lab.git",
+          "targetRevision": "gitops",
+          "path": "gitops/{{folderPath}}/{{clusterName}}/workflowTemplate",
+          "directory": {
+            "recurse": true
+          }
+        },
+        "destination": {
+          "namespace": "argo",
+          "name": "{{clusterName}}"
+        },
+        "project": "argo-workflows",
+        "syncPolicy": {
+          "automated": {
+            "prune": true,
+            "selfHeal": true,
+            "enabled": true
+          }
+        }
+      }
+    }
+  },
+  "status": {}
+}
