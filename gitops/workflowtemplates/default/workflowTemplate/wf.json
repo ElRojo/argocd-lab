@@ -1,10 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
-kind: WorkflowTemplate            # reusable recipe, saved in the cluster by name
+kind: WorkflowTemplate
 metadata:
-  name: input-workflow            # other files reference it by this name
+  name: input-workflow
 spec:
   entrypoint: main
-  # Default values. A parameter file (-f) or another workflow can override these.
   arguments:
     parameters:
       - name: message
@@ -15,7 +14,6 @@ spec:
         value: "unknown"
   templates:
     - name: main
-      # Inputs so this template can be called on its own or by other workflows.
       inputs:
         parameters:
           - name: message
