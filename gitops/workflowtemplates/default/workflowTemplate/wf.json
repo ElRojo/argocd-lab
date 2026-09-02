@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate            # reusable recipe, saved in the cluster by name
+metadata:
+  name: input-workflow            # other files reference it by this name
+spec:
+  entrypoint: main
+  # Default values. A parameter file (-f) or another workflow can override these.
+  arguments:
+    parameters:
+      - name: message
+        value: "default message (no input provided)"
+      - name: environment
+        value: "dev"
+      - name: owner
+        value: "unknown"
+  templates:
+    - name: main
+      # Inputs so this template can be called on its own or by other workflows.
+      inputs:
+        parameters:
+          - name: message
+            value: "{{workflow.parameters.message}}"
+          - name: environment
+            value: "{{workflow.parameters.environment}}"
+          - name: owner
+            value: "{{workflow.parameters.owner}}"
+      container:
+        image: busybox
+        command: [ sh, -c ]
+        args:
+          - >
+            echo "message: {{inputs.parameters.message}}";
+            echo "environment: {{inputs.parameters.environment}}";
+            echo "owner: {{inputs.parameters.owner}}"
+        resources:
+          limits:
+            memory: 32Mi
+            cpu: 100m
+ 
