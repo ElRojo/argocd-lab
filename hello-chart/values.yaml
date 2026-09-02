@@ -1,0 +1,25 @@
+replicaCount: 2
+
+image:
+  repository: kicbase/echo-server
+  tag: "1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  host: hello.local
+
+cronjobs:
+
+  cron-on-the-cob: 
+    enabled: false
+    schedule: "* * * * *"
+    image: "alpine:latest"
+    restartPolicy: "OnFailure"
+    command: "echo 'cron on the cob🌽!!'; sleep 10"

@@ -1,0 +1,22 @@
+{{- range $job, $config := .Values.cronjobs }}
+{{- if $config.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $.Release.Name }}-{{ $job }}
+spec:
+  schedule: {{ $config.schedule | quote }}
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 20
+      template:
+        spec:
+          restartPolicy: {{ $config.restartPolicy | default "OnFailure" }}
+          containers:
+            - name: {{ $job }}
+              image: {{ $config.image }}
+              imagePullPolicy: IfNotPresent
+              command: ["sh", "-c", {{ $config.command | quote }}]
+{{- end }}
+{{- end }}
