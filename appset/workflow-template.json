@@ -27,7 +27,7 @@
       "spec": {
         "source": {
           "repoURL": "https://github.com/ElRojo/argocd-lab.git",
-          "targetRevision": "gitops",
+          "targetRevision": "main",
           "path": "gitops/{{folderPath}}/{{clusterName}}/workflowTemplate",
           "directory": {
             "recurse": true
@@ -37,7 +37,7 @@
           "namespace": "argocd",
           "name": "{{clusterName}}"
         },
-        "project": "argo-workflows",
+        "project": "default",
         "syncPolicy": {
           "automated": {
             "prune": true,
