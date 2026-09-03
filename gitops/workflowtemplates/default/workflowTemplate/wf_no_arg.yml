@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: input-workflow-noarg
+  namespace: argo
+spec:
+  entrypoint: main
+  templates:
+    - name: main
+      inputs:
+        parameters:
+          - name: message
+            value: "{{workflow.parameters.message}}"
+          - name: environment
+            value: "{{workflow.parameters.environment}}"
+          - name: owner
+            value: "{{workflow.parameters.owner}}"
+      container:
+        image: busybox
+        command: [ sh, -c ]
+        args:
+          - >
+            echo "message: {{inputs.parameters.message}}";
+            echo "environment: {{inputs.parameters.environment}}";
+            echo "owner: {{inputs.parameters.owner}}"
+        resources:
+          limits:
+            memory: 32Mi
+            cpu: 100m
+ 
