@@ -5,6 +5,14 @@ metadata:
   namespace: argo
 spec:
   entrypoint: main
+  arguments:
+    parameters:
+      - name: message
+        value: "default message (no input provided)"
+      - name: environment
+        value: "dev"
+      - name: owner
+        value: "unknown"
   templates:
     - name: main
       inputs:
