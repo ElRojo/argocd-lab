@@ -5,7 +5,7 @@ metadata:
   name: {{ include "hello-chart.fullname" . }}
   annotations:
   {{- if and .Values.loadBalancer .Values.loadBalancer.tagLoadBalancer }}
-    alb.ingress.kubernetes.io/tags: "{{- range $key, $value := .Values.tags }}{{ $key }}={{ $value }}{{- end }}"
+    alb.ingress.kubernetes.io/tags: "{{- range $key, $value := .Values.tags }}{{ $key }}={{ $value }},{{- end }}"
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
