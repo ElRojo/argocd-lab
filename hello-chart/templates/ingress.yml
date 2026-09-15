@@ -9,7 +9,7 @@ metadata:
   {{- end }}
   labels:
     {{- range $key, $value := .Values.tags }}
-    {{ $key }}: {{ $value | quote }}
+    {{ $key }}: {{ $value }}
     {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
