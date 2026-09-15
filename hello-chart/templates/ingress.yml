@@ -7,6 +7,10 @@ metadata:
   {{- if and .Values.loadBalancer .Values.loadBalancer.tagLoadBalancer }}
     alb.ingress.kubernetes.io/tags: "uniqueName=name{{- range $key, $value := .Values.tags }},{{ $key }}={{ $value }}{{- end }}"
   {{- end }}
+  labels:
+    {{- range $key, $value := .Values.tags }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   rules:
