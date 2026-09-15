@@ -24,7 +24,7 @@ tags:
   key4: value4
   key5: value5
   key6: value6
-  booltest: true
+  booltest: "true"
 cronjobs:
   cron-on-the-cob: 
     enabled: false
