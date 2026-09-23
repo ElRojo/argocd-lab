@@ -34,7 +34,7 @@
       "schedule": "* * * * *",
       "image": "alpine:latest",
       "restartPolicy": "OnFailure",
-      "command": "echo 'cron on the cob🌽!!'; sleep 10"
+      "command": "echo 'cron on the cob🌽!!!!!!!@!'; sleep 10"
     }
   }
 }
