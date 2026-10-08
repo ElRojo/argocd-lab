@@ -30,7 +30,7 @@
   },
   "cronjobs": {
     "cron-on-the-cob": {
-      "enabled": false,
+      "enabled": true,
       "schedule": "* * * * *",
       "image": "alpine:latest",
       "restartPolicy": "OnFailure",
