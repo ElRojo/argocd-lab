@@ -39,7 +39,8 @@
       "enabled": true,
       "schedule": "* * * * *",
       "image": "alpine:latest",
-      "restartPolicy": "OnFailure"
+      "restartPolicy": "OnFailure",
+      "command": "echo 'cron on the cob🌽!!!!!!!@!'; sleep 10"
     }
   }
 }
