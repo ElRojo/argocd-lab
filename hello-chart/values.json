@@ -1,8 +1,11 @@
 {
   "autoscaling": {
-    "enabled": true }
-  },  
-  "cpuLimit":0,
+    "enabled": true,
+    "minReplicas": 2,
+    "maxReplicas": 5,
+    "targetCPUUtilizationPercentage": 80
+  },
+  "cpuLimit": 0,
   "replicaCount": 2,
   "image": {
     "repository": "kicbase/echo-server",
@@ -36,7 +39,7 @@
       "enabled": true,
       "schedule": "* * * * *",
       "image": "alpine:latest",
-      "restartPolicy": "OnFailure",
+      "restartPolicy": "OnFailure"
     }
   }
 }
