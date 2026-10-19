@@ -1,44 +1,21 @@
-# horizontalpodautoscaler.yaml
 {{- if .Values.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "app.uniqueName" . }}
-  namespace: {{ .Values.config.namespace }}
-  labels:
-    uniqueName: {{ include "app.uniqueName" . }}
-    {{- range $key, $value := .Values.tags }}
-    {{ $key }}: {{ $value | quote }}
-    {{- end }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "app.uniqueName" . }}
-  minReplicas: {{ .Values.application.autoscaling.minReplicas | default 2 }}
-  maxReplicas: {{ .Values.application.autoscaling.maxReplicas | default 5 }}
+    name: {{ .Release.Name }}
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
-    {{- range .Values.application.autoscaling.resources }}
     - type: Resource
       resource:
-        name: "{{ .name }}"
+        name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .averageUtilization }}
-    {{- end }}
-    {{- if .Values.loadBalancer }}
-    {{- range .Values.application.autoscaling.objectMetrics }}
-    - type: Object
-      object:
-        metric:
-          name: {{ .metricName }}
-        describedObject:
-          apiVersion: {{ .describedObject.apiVersion }}
-          kind: {{ .describedObject.kind }}
-          name: {{ .describedObject.name }}
-        target:
-          type: {{ .target.type }}
-          value: {{ .target.value }}
-    {{- end }}
-    {{- end }}
+          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
 {{- end }}
